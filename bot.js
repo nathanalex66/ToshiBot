@@ -6,10 +6,10 @@ const fs = require("fs");
 const config = JSON.parse(fs.readFileSync('config.json'));
 const mysql = require('sync-mysql');
 const cm = new mysql({
-	host: "localhost",
-	user: "root",
-	password: "NULL",
-	database: "idk"
+	host: process.env.host,
+	user: process.env.user,
+	password: process.env.pass,
+	database: process.env.db
 });
 
 let balance = {};
@@ -173,4 +173,4 @@ balance.set = (user, amount) => {
 
 // EVERYTHING might need to be above the client login. PLEASE OH GOD DO IT.
 
-client.login(config.token);
+client.login(process.env.token);
