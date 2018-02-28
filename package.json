@@ -1,0 +1,30 @@
+{
+  "name": "toshibot",
+  "version": "1.0.0",
+  "description": "thing",
+  "main": "bot.js",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "discord.js": "^11.3.0",
+    "fs": "^0.0.1-security",
+    "async": "^2.6.0",
+    "sync-mysql": "^3.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nathanalex66/ToshiBot.git"
+  },
+  "keywords": [
+    "bot"
+  ],
+  "author": "NathanAlexander",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nathanalex66/ToshiBot/issues"
+  },
+  "homepage": "https://github.com/nathanalex66/ToshiBot#readme"
+}
