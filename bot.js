@@ -76,10 +76,14 @@ client.on('message', msg => {
 	} else if (msg.content === config.prefixadmin+'help'&&administrators.includes(msg.author.id)) {
 		msg.channel.send({"embed": {"color": 3447003, "fields": [{"name": "Admin Commands", "value": ",,setbalance <mention> <money> - Set someone's balance\n,,payday {UNIMPLEMENTED} - Pay all users in discord."}]}});
 	} else if (msg.content === config.prefix+'top') {
-		var gettop = cm.query('SELECT * FROM `debug` ORDER BY CAST(`bal` AS DECIMAL) DESC LIMIT 0,9');
+		var gettop = cm.query('SELECT * FROM `toshibot` ORDER BY CAST (`balance` AS DECIMAL) DESC LIMIT 0,9');
 		let output = "";
-		for (i in gettop) {
-			output += gettop[i].username+": - $"+(parseInt(gettop[i].bal).toFixed(2)).toString()+"\n";
+		if (gettop > 0) {
+			for (i in gettop) {
+				output += "Adding Usernames Soon...: - $"+(parseInt(gettop[i].bal).toFixed(2)).toString()+"\n";
+			}
+		} else {
+			output = "No recored user data.";
 		}
 		msg.channel.send({"embed": {"color": 3447003, "fields": [{"name": "Top 10 Users", "value": output}]}});
 	} else if (msg.content === config.prefixadmin+'purge'&&administrators.includes(msg.author.id)) {
@@ -137,7 +141,7 @@ balance.transfer = (user1, user2, amount, message) => {
 
 balance.make = (user) => {
 	try {
-		cm.query('INSERT INTO `debug`(`usr`, `username`) VALUES (\''+user.id+'\', \''+user.username+'\')');
+		cm.query('INSERT INTO `toshibot`(`userid`) VALUES (\''+user.id+'\')');
 	} catch (err) {
 		console.log('[VAULT] MySQL Error: ' + err);
 	}
@@ -145,7 +149,7 @@ balance.make = (user) => {
 }
 
 balance.get = (user) => {
-	var gotdata = cm.query('SELECT * FROM `debug` WHERE `usr` = ' + user.id); // this is fine daveeeeeeee!!! no edit required...
+	var gotdata = cm.query('SELECT * FROM `toshibot` WHERE `userid` = ' + user.id); // this is fine daveeeeeeee!!! no edit required...
 	if (gotdata.length > 0) {
 		return parseFloat(gotdata[0].bal.toFixed(2));
 	} else {
@@ -158,14 +162,14 @@ balance.set = (user, amount) => {
 
 	console.log("b:"+amount);
 
-	var setdata = cm.query('SELECT * FROM `debug` WHERE `usr` = ' + user.id);
+	var setdata = cm.query('SELECT * FROM `toshibot` WHERE `userid` = ' + user.id);
 	if (setdata.length > 0) {
-		cm.query('UPDATE `debug` SET `bal`='+amount+' WHERE `usr` = ' + user.id);
+		cm.query('UPDATE `toshibot` SET `balance`='+amount+' WHERE `userid` = ' + user.id);
 		console.log('[VAULT] Updated ' + user.username + '\'s balance!');
 		return true;
 	} else {
 		balance.make(user);
-		cm.query('UPDATE `debug` SET `bal`='+amount+' WHERE `usr` = ' + user.id);
+		cm.query('UPDATE `toshibot` SET `balance`='+amount+' WHERE `userid` = ' + user.id);
 		console.log('[VAULT] Updated ' + user.username + '\'s balance!');
 		return true;
 	}
