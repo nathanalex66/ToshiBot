@@ -75,17 +75,6 @@ client.on('message', msg => {
 		msg.channel.send({"embed": {"color": 3447003, "fields": [{"name": "Commands", "value": ",balance <mention{unimplemented}> - Show your balance (soon show others balances)\n,transfer <mention> <amount> - Transfer money to a user.\n,top - Show top 10 users.\n"+(new Date().getTime() - msg.createdTimestamp) + " ms"}]}});
 	} else if (msg.content === config.prefixadmin+'help'&&administrators.includes(msg.author.id)) {
 		msg.channel.send({"embed": {"color": 3447003, "fields": [{"name": "Admin Commands", "value": ",,setbalance <mention> <money> - Set someone's balance\n,,payday {UNIMPLEMENTED} - Pay all users in discord.\n"+(new Date().getTime() - msg.createdTimestamp) + " ms"}]}});
-	} else if (msg.content === config.prefix+'top') {
-		var gettop = cm.query('SELECT * FROM `toshibot` ORDER BY CAST (`balance` AS DECIMAL) DESC LIMIT 0,9');
-		let output = "";
-		if (gettop > 0) {
-			for (i in gettop) {
-				output += "Adding Usernames Soon...: - $"+(parseInt(gettop[i].balance).toFixed(2)).toString()+"\n";
-			}
-		} else {
-			output = "No recored user data.";
-		}
-		msg.channel.send({"embed": {"color": 3447003, "fields": [{"name": "Top 10 Users", "value": output+'\n'+(new Date().getTime() - msg.createdTimestamp) + " ms"}]}});
 	} else if (msg.content === config.prefixadmin+'purge'&&administrators.includes(msg.author.id)) {
 		for (var i = 0; i < 10; i++) {
 			msg.channel.bulkDelete(100);
