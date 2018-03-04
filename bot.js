@@ -118,7 +118,7 @@ balance.transfer = (user1, user2, amount, message) => {
 	let u2money = balance.get(user2);
 
 	console.log('u1money: '+ typeof u1money);
-	console.log('u2money: '+ typeof u2money);
+	console.log('u2money: '+ typeof u2money); // webhook test
 
 	balance.set(user1, u1money - amount);
 	balance.set(user2, u2money + amount);
