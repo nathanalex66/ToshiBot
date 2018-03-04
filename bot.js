@@ -151,7 +151,7 @@ balance.make = (user) => {
 balance.get = (user) => {
 	var gotdata = cm.query('SELECT * FROM `toshibot` WHERE `userid` = ' + user.id); // this is fine daveeeeeeee!!! no edit required...
 	if (gotdata.length > 0) {
-		return parseFloat(gotdata[0].bal.toFixed(2));
+		return parseFloat(gotdata[0].balance.toFixed(2));
 	} else {
 		balance.make(user);
 		return 0;
