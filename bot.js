@@ -80,7 +80,7 @@ client.on('message', msg => {
 		let output = "";
 		if (gettop > 0) {
 			for (i in gettop) {
-				output += "Adding Usernames Soon...: - $"+(parseInt(gettop[i].bal).toFixed(2)).toString()+"\n";
+				output += "Adding Usernames Soon...: - $"+(parseInt(gettop[i].balance).toFixed(2)).toString()+"\n";
 			}
 		} else {
 			output = "No recored user data.";
