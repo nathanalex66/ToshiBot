@@ -29,7 +29,7 @@ client.on('message', msg => {
 				"color": 3447003,
 				"fields": [{
 					"name": msg.author.username+"'s Wallet",
-					"value": "$"+balance.get(msg.author).toFixed(2)
+					"value": "$"+balance.get(msg.author).toFixed(2)+'\n'+(new Date().getTime() - msg.createdTimestamp) + " ms"
 				}],
 				"timestamp": new Date(),
 				"footer": {
@@ -72,9 +72,9 @@ client.on('message', msg => {
 			balance.set(targetid, money);
 		}
 	} else if (msg.content === config.prefix+'help') {
-		msg.channel.send({"embed": {"color": 3447003, "fields": [{"name": "Commands", "value": ",balance <mention{unimplemented}> - Show your balance (soon show others balances)\n,transfer <mention> <amount> - Transfer money to a user.\n,top - Show top 10 users."}]}});
+		msg.channel.send({"embed": {"color": 3447003, "fields": [{"name": "Commands", "value": ",balance <mention{unimplemented}> - Show your balance (soon show others balances)\n,transfer <mention> <amount> - Transfer money to a user.\n,top - Show top 10 users.\n"+(new Date().getTime() - msg.createdTimestamp) + " ms"}]}});
 	} else if (msg.content === config.prefixadmin+'help'&&administrators.includes(msg.author.id)) {
-		msg.channel.send({"embed": {"color": 3447003, "fields": [{"name": "Admin Commands", "value": ",,setbalance <mention> <money> - Set someone's balance\n,,payday {UNIMPLEMENTED} - Pay all users in discord."}]}});
+		msg.channel.send({"embed": {"color": 3447003, "fields": [{"name": "Admin Commands", "value": ",,setbalance <mention> <money> - Set someone's balance\n,,payday {UNIMPLEMENTED} - Pay all users in discord.\n"+(new Date().getTime() - msg.createdTimestamp) + " ms"}]}});
 	} else if (msg.content === config.prefix+'top') {
 		var gettop = cm.query('SELECT * FROM `toshibot` ORDER BY CAST (`balance` AS DECIMAL) DESC LIMIT 0,9');
 		let output = "";
@@ -85,15 +85,15 @@ client.on('message', msg => {
 		} else {
 			output = "No recored user data.";
 		}
-		msg.channel.send({"embed": {"color": 3447003, "fields": [{"name": "Top 10 Users", "value": output}]}});
+		msg.channel.send({"embed": {"color": 3447003, "fields": [{"name": "Top 10 Users", "value": output+'\n'+(new Date().getTime() - msg.createdTimestamp) + " ms"}]}});
 	} else if (msg.content === config.prefixadmin+'purge'&&administrators.includes(msg.author.id)) {
 		for (var i = 0; i < 10; i++) {
 			msg.channel.bulkDelete(100);
 		}
 	}/* else if (msg.content == config.prefixadmin+'payday') {
-		var getusers =
+		var getusers = cm.query('');
 		for (i in msg.guild.members) {
-			balance.set(msg.guild.members[i].user.id, msg.guild.members[i].bal + 1);
+			balance.set(msg.guild.members[i].user.id, msg.guild.members[i].balance + 1);
 		}
 	}*/
 });
@@ -128,7 +128,7 @@ balance.transfer = (user1, user2, amount, message) => {
 			"color": 3447003,
 			"fields": [{
 				"name": user1.username+" ==> "+user2.username,
-				"value": "$"+amount.toFixed(2)+" was transferred."
+				"value": "$"+amount.toFixed(2)+" was transferred.\n"+(new Date().getTime() - msg.createdTimestamp) + " ms"
 			}],
 			"timestamp": new Date(),
 			"footer": {
